@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameVault</title>
+  <meta charset="UTF-8">
+  <title>GameVault</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    
+
+<body class="bg-gray-100 p-5">
+
+  <!-- Title -->
+  <h1 class="text-2xl font-bold text-orange-500 mb-5">
+    GameVault
+  </h1>
+
+  <!-- Container -->
+  <div id="games-container" 
+       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+  </div>
+
+  <script type="module" src="main.js"></script>
+
 </body>
 </html>
