@@ -1,7 +1,9 @@
 import { games } from "./data.js";
 
 const container = document.getElementById("games-container");
+const searchInput = document.getElementById("searchInput");
 
+// display
 function displayGames(list) {
   container.innerHTML = "";
 
@@ -34,6 +36,16 @@ function displayGames(list) {
   });
 }
 
-// afficher
-displayGames(games);
+// 🔍 SEARCH
+searchInput.addEventListener("input", () => {
+  const value = searchInput.value.toLowerCase();
 
+  const filtered = games.filter(game =>
+    game.title.toLowerCase().includes(value)
+  );
+
+  displayGames(filtered);
+});
+
+// initial
+displayGames(games);
