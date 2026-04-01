@@ -2,6 +2,9 @@ import { games } from "./data.js";
 
 const container = document.getElementById("games-container");
 const searchInput = document.getElementById("searchInput");
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+let currentCategory = "All";
 
 // display
 function displayGames(list) {
@@ -36,16 +39,37 @@ function displayGames(list) {
   });
 }
 
-// 🔍 SEARCH
-searchInput.addEventListener("input", () => {
-  const value = searchInput.value.toLowerCase();
+// 🎮 FILTER
+filterButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
 
-  const filtered = games.filter(game =>
-    game.title.toLowerCase().includes(value)
-  );
+    currentCategory = btn.dataset.category;
+
+    applyFilters();
+
+    // UI (active button)
+    filterButtons.forEach(b => b.classList.remove("bg-green-500","text-white"));
+    btn.classList.add("bg-green-500","text-white");
+  });
+});
+
+// 🔍 + 🎮 COMBINED FILTER
+function applyFilters() {
+  const searchValue = searchInput.value.toLowerCase();
+
+  let filtered = games.filter(game => {
+    const matchTitle = game.title.toLowerCase().includes(searchValue);
+    const matchCategory =
+      currentCategory === "All" || game.category === currentCategory;
+
+    return matchTitle && matchCategory;
+  });
 
   displayGames(filtered);
-});
+}
+
+// 🔍 SEARCH
+searchInput.addEventListener("input", applyFilters);
 
 // initial
 displayGames(games);
