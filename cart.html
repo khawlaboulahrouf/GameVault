@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Mon Panier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panier</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -12,7 +13,16 @@
 
   <div id="cart-container" class="space-y-4"></div>
 
+  <!-- TOTAL -->
+  <div id="total" class="mt-5 text-xl font-bold text-right"></div>
+
+  <!-- COMMANDER -->
+  <button id="orderBtn"
+    class="mt-5 bg-green-500 text-white px-4 py-2 rounded-lg">
+    Commander 🧾
+  </button>
 
   <script type="module" src="cartPage.js"></script>
+
 </body>
 </html>
