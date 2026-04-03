@@ -13,42 +13,34 @@ function displayGames(list) {
   list.forEach(game => {
     const card = document.createElement("div");
 
-    card.className =
-      "bg-white rounded-xl shadow-md overflow-hidden p-3";
+    card.className = "bg-white p-3 rounded-xl shadow";
 
     card.innerHTML = `
-      <img src="${game.image}" class="w-full h-40 object-cover rounded-lg mb-3">
-
-      <h3 class="font-bold text-lg">${game.title}</h3>
-
-      <p class="text-blue-500 text-sm mb-2">${game.category}</p>
-
-      <div class="flex justify-between items-center">
-        <span class="font-semibold">${game.price}$</span>
-
-        <button class="add-btn bg-orange-500 text-white px-3 py-1 rounded-lg text-sm">
-          Panier 🛒
+      <img src="${game.image}" class="w-full h-40 object-cover rounded mb-2">
+      <h3 class="font-bold">${game.title}</h3>
+      <p class="text-blue-500 text-sm">${game.category}</p>
+      <div class="flex justify-between items-center mt-2">
+        <span>${game.price}$</span>
+        <button class="add-btn bg-orange-500 text-white px-3 py-1 rounded">
+          Panier
         </button>
       </div>
     `;
 
-    // important 
-    const btn = card.querySelector(".add-btn");
-    btn.addEventListener("click", () => {
+    card.querySelector(".add-btn").addEventListener("click", () => {
       addToCart(game);
-      alert("Ajouté au panier ");
+      alert("Ajouté ✅");
     });
 
     container.appendChild(card);
   });
 }
 
-// filters + search 
 function applyFilters() {
-  const searchValue = searchInput.value.toLowerCase();
+  const value = searchInput.value.toLowerCase();
 
-  let filtered = games.filter(game => {
-    const matchTitle = game.title.toLowerCase().includes(searchValue);
+  const filtered = games.filter(game => {
+    const matchTitle = game.title.toLowerCase().includes(value);
     const matchCategory =
       currentCategory === "All" || game.category === currentCategory;
 
@@ -64,6 +56,9 @@ filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     currentCategory = btn.dataset.category;
     applyFilters();
+
+    filterButtons.forEach(b => b.classList.remove("bg-green-500","text-white"));
+    btn.classList.add("bg-green-500","text-white");
   });
 });
 
