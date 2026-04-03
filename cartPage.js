@@ -1,5 +1,7 @@
 import { cart, increaseQty, decreaseQty, removeFromCart } from "./cart.js";
 
+
+
 const container = document.getElementById("cart-container");
 
 function renderCart() {

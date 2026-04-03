@@ -1,4 +1,22 @@
-export let cart = [];
+export let cart = loadCart();
+
+
+export function clearCart() {
+  cart.length = 0;
+  localStorage.removeItem("cart");
+}
+
+// 💾 load from localStorage
+function loadCart() {
+  const data = localStorage.getItem("cart");
+  return data ? JSON.parse(data) : [];
+}
+
+
+// 💾 save to localStorage
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
 
 // ➕ ajouter
 export function addToCart(game) {
@@ -9,15 +27,19 @@ export function addToCart(game) {
   } else {
     cart.push({ ...game, quantity: 1 });
   }
+
+  saveCart();
 }
 
-// ➕ augmenter quantité
+// ➕ increase
 export function increaseQty(id) {
   const item = cart.find(p => p.id === id);
   if (item) item.quantity++;
+
+  saveCart();
 }
 
-// ➖ diminuer quantité
+// ➖ decrease
 export function decreaseQty(id) {
   const item = cart.find(p => p.id === id);
 
@@ -28,9 +50,13 @@ export function decreaseQty(id) {
       cart = cart.filter(p => p.id !== id);
     }
   }
+
+  saveCart();
 }
 
-// 🗑️ supprimer produit
+// 🗑️ remove
 export function removeFromCart(id) {
   cart = cart.filter(p => p.id !== id);
+
+  saveCart();
 }
