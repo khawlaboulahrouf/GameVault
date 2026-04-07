@@ -10,42 +10,62 @@ function saveCart() {
 }
 
 export function addToCart(game) {
-  const exist = cart.find(item => item.id === game.id);
-
-  if (exist) {
-    exist.quantity++;
-  } else {
-    cart.push({ ...game, quantity: 1 });
+  let found = false;
+  // Boucle simple pour chercher si le jeu existe
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].id === game.id) {
+      cart[i].quantity++;
+      found = true;
+      break; 
+    }
   }
 
+  if (!found) {
+    // On ajoute manuellement la propriété quantity
+    game.quantity = 1;
+    cart.push(game);
+  }
   saveCart();
 }
 
 export function increaseQty(id) {
-  const item = cart.find(p => p.id === id);
-  if (item) item.quantity++;
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].id === id) {
+      cart[i].quantity++;
+      break;
+    }
+  }
   saveCart();
 }
 
 export function decreaseQty(id) {
-  const item = cart.find(p => p.id === id);
-
-  if (item) {
-    item.quantity--;
-    if (item.quantity <= 0) {
-      cart = cart.filter(p => p.id !== id);
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].id === id) {
+      cart[i].quantity--;
+      // Si la quantité tombe à 0, on supprime
+      if (cart[i].quantity <= 0) {
+        removeFromCart(id);
+        return; // On sort de la fonction
+      }
+      break;
     }
   }
-
   saveCart();
 }
 
 export function removeFromCart(id) {
-  cart = cart.filter(p => p.id !== id);
+  let newCart = [];
+  // On reconstruit un tableau sans l'élément à supprimer
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].id !== id) {
+      newCart.push(cart[i]);
+    }
+  }
+  cart = newCart;
   saveCart();
 }
 
 export function clearCart() {
-  cart.length = 0;
+  cart = [];
   localStorage.removeItem("cart");
 }

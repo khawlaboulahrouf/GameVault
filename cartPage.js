@@ -6,62 +6,49 @@ const orderBtn = document.getElementById("orderBtn");
 
 function calculateTotal() {
   let total = 0;
-  cart.forEach(item => total += item.price * item.quantity);
-  totalDiv.textContent = "Total: " + total.toFixed(2) + "$";
+  for (let i = 0; i < cart.length; i++) {
+    total += cart[i].price * cart[i].quantity;
+  }
+  totalDiv.textContent = "Total: " + total + "$";
 }
 
 function renderCart() {
   container.innerHTML = "";
 
-  cart.forEach(item => {
+  for (let i = 0; i < cart.length; i++) {
+    const item = cart[i];
     const div = document.createElement("div");
-
     div.className = "bg-white p-4 rounded shadow flex justify-between items-center";
 
     div.innerHTML = `
       <div>
         <h3 class="font-bold">${item.title}</h3>
-        <p>${item.price}$</p>
+        <p>${item.price}$ x ${item.quantity}</p>
       </div>
-
-      <div class="flex items-center gap-2">
-        <button class="dec bg-gray-300 px-2">-</button>
-        <span>${item.quantity}</span>
-        <button class="inc bg-gray-300 px-2">+</button>
-        <button class="del text-red-500">🗑️</button>
+      <div class="flex gap-2">
+        <button class="dec bg-gray-200 px-2">-</button>
+        <button class="inc bg-gray-200 px-2">+</button>
+        <button class="del text-red-500">Effacer</button>
       </div>
     `;
 
-    div.querySelector(".inc").addEventListener("click", () => {
-      increaseQty(item.id);
-      renderCart();
-    });
-
-    div.querySelector(".dec").addEventListener("click", () => {
-      decreaseQty(item.id);
-      renderCart();
-    });
-
-    div.querySelector(".del").addEventListener("click", () => {
-      removeFromCart(item.id);
-      renderCart();
-    });
+    div.querySelector(".inc").onclick = () => { increaseQty(item.id); renderCart(); };
+    div.querySelector(".dec").onclick = () => { decreaseQty(item.id); renderCart(); };
+    div.querySelector(".del").onclick = () => { removeFromCart(item.id); renderCart(); };
 
     container.appendChild(div);
-  });
-
+  }
   calculateTotal();
 }
 
-orderBtn.addEventListener("click", () => {
-  if (cart.length === 0) {
-    alert("Panier vide ❌");
-    return;
+orderBtn.onclick = () => {
+  if (cart.length > 0) {
+    clearCart();
+    renderCart();
+    alert("Merci pour votre achat !");
+  } else {
+    alert("Votre panier est vide.");
   }
-
-  clearCart();
-  renderCart();
-  alert("Commande réussie 🎉");
-});
+};
 
 renderCart();
