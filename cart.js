@@ -21,13 +21,13 @@ export function addToCart(game) {
   saveCart();
 }
 
-export function increaseQty(id) {
+export function Qtyincrementation(id) {
   const item = cart.find(p => p.id === id);
   if (item) item.quantity++;
   saveCart();
 }
 
-export function decreaseQty(id) {
+export function Qtydecrementation(id) {
   const item = cart.find(p => p.id === id);
 
   if (item) {
@@ -40,12 +40,12 @@ export function decreaseQty(id) {
   saveCart();
 }
 
-export function removeFromCart(id) {
+export function CartSupprElM(id) {
   cart = cart.filter(p => p.id !== id);
   saveCart();
 }
 
-export function clearCart() {
+export function VideCart() {
   cart.length = 0;
   localStorage.removeItem("cart");
 }

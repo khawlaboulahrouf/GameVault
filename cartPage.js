@@ -1,4 +1,4 @@
-import { cart, increaseQty, decreaseQty, removeFromCart, clearCart } from "./cart.js";
+import { cart, Qtyincrementation, Qtydecrementation, CartSupprElM, VideCart } from "./cart.js";
 
 const container = document.getElementById("cart-container");
 const totalDiv = document.getElementById("total");
@@ -33,17 +33,17 @@ function renderCart() {
     `;
 
     div.querySelector(".inc").addEventListener("click", () => {
-      increaseQty(item.id);
+      Qtyincrementation(item.id);
       renderCart();
     });
 
     div.querySelector(".dec").addEventListener("click", () => {
-      decreaseQty(item.id);
+      Qtydecrementation(item.id);
       renderCart();
     });
 
     div.querySelector(".del").addEventListener("click", () => {
-      removeFromCart(item.id);
+      CartSupprElM(item.id);
       renderCart();
     });
 
@@ -55,13 +55,13 @@ function renderCart() {
 
 orderBtn.addEventListener("click", () => {
   if (cart.length === 0) {
-    alert("Panier vide ❌");
+    alert("Panier vide ");
     return;
   }
 
-  clearCart();
+  VideCart();
   renderCart();
-  alert("Commande réussie 🎉");
+  alert("Commande réussie ");
 });
 
 renderCart();

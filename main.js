@@ -5,7 +5,7 @@ const container = document.getElementById("games-container");
 const searchInput = document.getElementById("searchInput");
 const filterButtons = document.querySelectorAll(".filter-btn");
 
-let currentCategory = "All";
+let CategoryRecent = "All";
 
 function displayGames(list) {
   container.innerHTML = "";
@@ -29,20 +29,20 @@ function displayGames(list) {
 
     card.querySelector(".add-btn").addEventListener("click", () => {
       addToCart(game);
-      alert("Ajouté ✅");
+      alert("Ajouté");
     });
 
     container.appendChild(card);
   });
 }
 
-function applyFilters() {
+function SearchFilter() {
   const value = searchInput.value.toLowerCase();
 
   const filtered = games.filter(game => {
     const matchTitle = game.title.toLowerCase().includes(value);
     const matchCategory =
-      currentCategory === "All" || game.category === currentCategory;
+      CategoryRecent === "All" || game.category === CategoryRecent;
 
     return matchTitle && matchCategory;
   });
@@ -50,12 +50,12 @@ function applyFilters() {
   displayGames(filtered);
 }
 
-searchInput.addEventListener("input", applyFilters);
+searchInput.addEventListener("input", SearchFilter);
 
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
-    currentCategory = btn.dataset.category;
-    applyFilters();
+    CategoryRecent = btn.dataset.category;
+    SearchFilter();
 
     filterButtons.forEach(b => b.classList.remove("bg-green-500","text-white"));
     btn.classList.add("bg-green-500","text-white");
