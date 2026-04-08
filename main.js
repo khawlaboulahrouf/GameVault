@@ -50,6 +50,12 @@ function SearchFilter() {
   displayGames(filtered);
 }
 
+function updateCategoryCount(){
+  const numb = games.filter(c.category.length === All )
+  return  ;
+}
+updateCategoryCount(numb)
+
 searchInput.addEventListener("input", SearchFilter);
 
 filterButtons.forEach(btn => {
