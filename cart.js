@@ -1,4 +1,4 @@
-export let cart = loadCart();
+export const cart = loadCart();
 
 function loadCart() {
   const data = localStorage.getItem("cart");
